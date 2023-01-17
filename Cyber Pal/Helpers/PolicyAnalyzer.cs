@@ -21,31 +21,28 @@ namespace CyberPal.App
         /// String2 - Current Value of the policy
         /// String3 - Description
         /// </summary>
-        public List<Tuple<bool, string, string, string>> Results { get; set; }
+        public Dictionary<string, PolicyItem> Results { get; set; }
 
         public PolicyAnalyzer()
         {
-            Results = new List<Tuple<bool, string, string, string>>();
-        }
-
-        public void AnalyzeAsync()
-        {
-            AnalyzeSecPol();                                    
-        }   
+            Results = new Dictionary<string, PolicyItem>();
+        }               
         
-        private void AnalyzeSecPol()
+        public void AnalyzeSecPol()
         {
             var file = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "secpol.txt");
             if (File.Exists(file))
                 File.Delete(file);
 
-            Process p = new Process();
-            p.StartInfo.FileName = Environment.ExpandEnvironmentVariables(@"%SystemRoot%\system32\secedit.exe");
-            p.StartInfo.Arguments = String.Format(@"/export /cfg ""{0}"" /quiet", file);
-            p.StartInfo.CreateNoWindow = true;
-            p.StartInfo.UseShellExecute = false;
-            p.Start();
-            p.WaitForExit();
+            using (Process p = new Process())
+            {
+                p.StartInfo.FileName = Environment.ExpandEnvironmentVariables(@"%SystemRoot%\system32\secedit.exe");
+                p.StartInfo.Arguments = String.Format(@"/export /cfg ""{0}"" /quiet", file);
+                p.StartInfo.CreateNoWindow = true;
+                p.StartInfo.UseShellExecute = false;
+                p.Start();
+                p.WaitForExit();
+            }
 
             var data = string.Empty;
             using (StreamReader sr = new StreamReader(file))
@@ -72,7 +69,7 @@ namespace CyberPal.App
             CheckValueIs(state, "EnableAdminAccount", "Enable administrator account", "The administrator account should be disabled", "0");
             CheckValueIs(state, "EnableGuestAccount", "Enable guest account", "The guest account should be disabled", "0");
             CheckValueNot(state, "AuditSystemEvents", "Audit system events", "The system should be configured to audit system events", "0");
-
+            CheckValueNot(state, "AuditProcessTracking", "Audit processes", "Audit tracking allows to see which processes are running", "0");
         }
 
         private void CheckValueInt(Dictionary<string, string> state, string key, int min, int max, string name, string description)
@@ -88,10 +85,10 @@ namespace CyberPal.App
                         isValid = true;
                 }
 
-                Results.Add(new Tuple<bool, string, string, string>(isValid, name, state[key.ToLower()], description));
+                Results.Add(key, new PolicyItem() { IsValid = isValid, Name = name, Value = state[key.ToLower()], Description = description, Key = key });
             }
             else
-                Results.Add(new Tuple<bool, string, string, string>(false, name, "Not Found", "Value not found"));
+                Results.Add(key, new PolicyItem() { IsValid = false, Name = name, Value = "Not Found", Description = "Value not found", Key = key });            
         }
 
         private void CheckValueNot(Dictionary<string, string> state, string key, string name, string description, params string[] notValues)
@@ -105,11 +102,11 @@ namespace CyberPal.App
                 if (!notList.Contains(state[key.ToLower()], StringComparer.OrdinalIgnoreCase))
                     isValid = true;
 
-                Results.Add(new Tuple<bool, string, string, string>(isValid, name, state[key.ToLower()], description));
+                Results.Add(key, new PolicyItem() { IsValid = isValid, Name = name, Value = state[key.ToLower()], Description = description, Key = key });
             }
             else
-                Results.Add(new Tuple<bool, string, string, string>(false, name, "Not Found", "Value not found"));
-            
+                Results.Add(key, new PolicyItem() { IsValid = false, Name = name, Value = "Not Found", Description = "Value not found", Key = key });
+
         }
 
         private void CheckValueIs(Dictionary<string, string> state, string key, string name, string description, params string[] okValues)
@@ -123,10 +120,22 @@ namespace CyberPal.App
                 if (okList.Contains(state[key.ToLower()], StringComparer.OrdinalIgnoreCase))
                     isValid = true;
 
-                Results.Add(new Tuple<bool, string, string, string>(isValid, name, state[key.ToLower()], description));
+                Results.Add(key, new PolicyItem() { IsValid = isValid, Name = name, Value = state[key.ToLower()], Description = description, Key = key });
             }
             else
-                Results.Add(new Tuple<bool, string, string, string>(false, name, "Not Found", "Value not found"));
+                Results.Add(key, new PolicyItem() { IsValid = false, Name = name, Value = "Not Found", Description = "Value not found", Key = key });
+
+        }
+
+        private void CheckValue(Dictionary<string, string> state, string key, string name, string description)
+        {
+            if (state.ContainsKey(key.ToLower()))
+            {
+                bool isValid = true;
+                Results.Add(key, new PolicyItem() { IsValid = isValid, Name = name, Value = state[key.ToLower()], Description = description, Key = key });
+            }
+            else
+                Results.Add(key, new PolicyItem() { IsValid = false, Name = name, Value = "Not Found", Description = "Value not found", Key = key });
 
         }
 

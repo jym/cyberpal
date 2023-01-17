@@ -1,6 +1,6 @@
 ﻿namespace CyberPal.App
 {
-    partial class ucPolicy
+    partial class ucAuditing
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,51 +29,51 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucPolicy));
-            this.lvPolicies = new System.Windows.Forms.ListView();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ucAuditing));
+            this.lvAudits = new System.Windows.Forms.ListView();
+            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tmrRefresh = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // lvPolicies
+            // lvAudits
             // 
-            this.lvPolicies.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.lvAudits.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4,
             this.columnHeader1,
             this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4});
-            this.lvPolicies.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvPolicies.FullRowSelect = true;
-            this.lvPolicies.GridLines = true;
-            this.lvPolicies.Location = new System.Drawing.Point(0, 0);
-            this.lvPolicies.MultiSelect = false;
-            this.lvPolicies.Name = "lvPolicies";
-            this.lvPolicies.Size = new System.Drawing.Size(729, 410);
-            this.lvPolicies.SmallImageList = this.imageList1;
-            this.lvPolicies.TabIndex = 1;
-            this.lvPolicies.UseCompatibleStateImageBehavior = false;
-            this.lvPolicies.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "";
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Policy";
-            this.columnHeader2.Width = 200;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Value";
+            this.columnHeader3});
+            this.lvAudits.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvAudits.FullRowSelect = true;
+            this.lvAudits.GridLines = true;
+            this.lvAudits.Location = new System.Drawing.Point(0, 0);
+            this.lvAudits.Name = "lvAudits";
+            this.lvAudits.Size = new System.Drawing.Size(766, 454);
+            this.lvAudits.SmallImageList = this.imageList1;
+            this.lvAudits.TabIndex = 0;
+            this.lvAudits.UseCompatibleStateImageBehavior = false;
+            this.lvAudits.View = System.Windows.Forms.View.Details;
             // 
             // columnHeader4
             // 
-            this.columnHeader4.Text = "Notes";
+            this.columnHeader4.Text = "";
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Audit Type";
+            this.columnHeader1.Width = 100;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Audit";
+            this.columnHeader2.Width = 150;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Status";
             // 
             // imageList1
             // 
@@ -81,31 +81,32 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "redx-24.png");
-            this.imageList1.Images.SetKeyName(1, "checkbox-24.png");
+            this.imageList1.Images.SetKeyName(1, "checkbox-48.png");
             // 
             // tmrRefresh
             // 
             this.tmrRefresh.Interval = 500;
             this.tmrRefresh.Tick += new System.EventHandler(this.tmrRefresh_Tick);
             // 
-            // ucPolicy
+            // ucAuditing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.lvPolicies);
-            this.Name = "ucPolicy";
-            this.Size = new System.Drawing.Size(729, 410);
+            this.Controls.Add(this.lvAudits);
+            this.Name = "ucAuditing";
+            this.Size = new System.Drawing.Size(766, 454);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private ListView lvPolicies;
+
+        private ListView lvAudits;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
-        private ImageList imageList1;
         private System.Windows.Forms.Timer tmrRefresh;
+        private ImageList imageList1;
     }
 }
