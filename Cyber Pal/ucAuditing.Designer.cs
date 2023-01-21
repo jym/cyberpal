@@ -37,6 +37,12 @@
             this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tmrRefresh = new System.Windows.Forms.Timer(this.components);
+            this.ctxMnuOptions = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.successToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.failureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.successFailureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noAuditingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxMnuOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // lvAudits
@@ -56,6 +62,7 @@
             this.lvAudits.TabIndex = 0;
             this.lvAudits.UseCompatibleStateImageBehavior = false;
             this.lvAudits.View = System.Windows.Forms.View.Details;
+            this.lvAudits.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lvAudits_MouseDown);
             // 
             // columnHeader4
             // 
@@ -85,8 +92,46 @@
             // 
             // tmrRefresh
             // 
-            this.tmrRefresh.Interval = 500;
+            this.tmrRefresh.Interval = 10000;
             this.tmrRefresh.Tick += new System.EventHandler(this.tmrRefresh_Tick);
+            // 
+            // ctxMnuOptions
+            // 
+            this.ctxMnuOptions.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.successToolStripMenuItem,
+            this.failureToolStripMenuItem,
+            this.successFailureToolStripMenuItem,
+            this.noAuditingToolStripMenuItem});
+            this.ctxMnuOptions.Name = "ctxMnuOptions";
+            this.ctxMnuOptions.Size = new System.Drawing.Size(167, 92);
+            // 
+            // successToolStripMenuItem
+            // 
+            this.successToolStripMenuItem.Name = "successToolStripMenuItem";
+            this.successToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.successToolStripMenuItem.Text = "Success";
+            this.successToolStripMenuItem.Click += new System.EventHandler(this.successToolStripMenuItem_Click);
+            // 
+            // failureToolStripMenuItem
+            // 
+            this.failureToolStripMenuItem.Name = "failureToolStripMenuItem";
+            this.failureToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.failureToolStripMenuItem.Text = "Failure";
+            this.failureToolStripMenuItem.Click += new System.EventHandler(this.failureToolStripMenuItem_Click);
+            // 
+            // successFailureToolStripMenuItem
+            // 
+            this.successFailureToolStripMenuItem.Name = "successFailureToolStripMenuItem";
+            this.successFailureToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.successFailureToolStripMenuItem.Text = "Success && Failure";
+            this.successFailureToolStripMenuItem.Click += new System.EventHandler(this.successFailureToolStripMenuItem_Click);
+            // 
+            // noAuditingToolStripMenuItem
+            // 
+            this.noAuditingToolStripMenuItem.Name = "noAuditingToolStripMenuItem";
+            this.noAuditingToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.noAuditingToolStripMenuItem.Text = "No Auditing";
+            this.noAuditingToolStripMenuItem.Click += new System.EventHandler(this.noAuditingToolStripMenuItem_Click);
             // 
             // ucAuditing
             // 
@@ -95,6 +140,7 @@
             this.Controls.Add(this.lvAudits);
             this.Name = "ucAuditing";
             this.Size = new System.Drawing.Size(766, 454);
+            this.ctxMnuOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -108,5 +154,10 @@
         private ColumnHeader columnHeader4;
         private System.Windows.Forms.Timer tmrRefresh;
         private ImageList imageList1;
+        private ContextMenuStrip ctxMnuOptions;
+        private ToolStripMenuItem successToolStripMenuItem;
+        private ToolStripMenuItem failureToolStripMenuItem;
+        private ToolStripMenuItem successFailureToolStripMenuItem;
+        private ToolStripMenuItem noAuditingToolStripMenuItem;
     }
 }

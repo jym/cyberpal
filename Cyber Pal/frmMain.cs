@@ -15,9 +15,7 @@ namespace CyberPal.App
         public ConcurrentDictionary<string, AuditItem> AuditItems { get; set; } = new ConcurrentDictionary<string, AuditItem>();
 
         public frmMain()
-        {
-            new AuditPol();
-
+        {            
             InitializeComponent();
             Initialize();
         }
@@ -131,7 +129,7 @@ namespace CyberPal.App
             }
         }
 
-        private void LoadAudits()
+        public void LoadAudits()
         {
             try
             {
